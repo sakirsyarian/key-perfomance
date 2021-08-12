@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://panel.websiteori.com/files/system/_file608bdc2579c6c-favicon.png">
+    <title>WebsiteOri - KPI</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- tailwind -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <!-- date -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/lightpick@latest/css/lightpick.css">
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- navbar -->
+    <nav x-data="{show:false}" class="flex items-center justify-between flex-wrap py-4 px-6">
+        <!-- judul -->
+        <div class="flex items-center flex-shrink-0">
+            <span
+                class="px-5 py-2 bg-white shadow rounded-lg text-blue-800 hover:text-blue-600 font-semibold text-lg tracking-tight">Weekly
+                Key Perfomance Index</span>
+        </div>
+        <!-- hamburger -->
+        <div class="block md:hidden">
+            <button @click="show=!show" class="flex items-center focus:outline-none rounded hover:text-gray-600">
+                <svg class="fill-current w-4" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <title>Menu</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                </svg>
+            </button>
+        </div>
+        <!-- menu -->
+        <div @click.away="show = false" :class="{ 'block': show, 'hidden': !show }"
+            class="w-full block flex-grow md:flex md:justify-end md:w-auto">
+            <div class="py-1 md:py-0">
+                <a href="#" class="block md:inline-block text-sm text-gray-500 mt-5 md:mt-0">
+                    <!-- date -->
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p class="hidden" id="result-2">&nbsp;</p>
+                            <input autocomplete="off" type="text" id="demo-2" placeholder="Date Range Picker"
+                                class="w-48 rounded-lg shadow px-3 py-2 bg-white text-sm font-medium text-gray-700 focus:outline-none" />
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="block md:inline-block text-sm text-gray-500 mt-3 ml-0 md:ml-2 md:mt-0">
+                    <!-- dropdown menu -->
+                    <select
+                        class="w-full rounded-lg shadow px-3 py-2 bg-white text-sm font-medium text-gray-700 focus:outline-none"
+                        onchange="changeLabel(this)">
+                        <option disabled selected value>Select</option>
+                        <option value="sarian">Ahmad Sarian</option>
+                        <option value="astrid">Astrid Dewi</option>
+                        <option value="alam">Alamsyah</option>
+                        <option value="putra">Ade Tri Putra</option>
+                        <option value="alsa">Alsa Adrimuna</option>
+                        <option value="zalva">Zalva Belladonna</option>
+                        <option value="zaki">Hauzan Muzaki</option>
+                        <option value="irsyad">Irsyad Asy'ari</option>
+                        <option value="renaldi">Renaldi Putra</option>
+                    </select>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- chaert -->
+    <div id="print" class="px-6 pb-6 pt-2 text-gray-700">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="flex">
+            <!-- chart -->
+            <div class="bg-white rounded-lg md:col-span-3 shadow grid items-center py-6">
+                <canvas id="planet-chart" height="35vh" width="100vw"></canvas>
+            </div>
+            <!-- profile card -->
+            <div class=" rounded-lg overflow-hidden shadow max-w-full bg-white">
+                <img id="lbl_bg"
+                    src="https://image.freepik.com/free-vector/stylish-hexagonal-line-pattern-background_1017-19742.jpg"
+                    class="w-full object-cover bg-center h-24" />
+                <div class="flex justify-center -mt-12">
+                    <img id="lbl_img" src="https://picsum.photos/id/1005/400/250"
+                        class="rounded-full w-24 h-24 object-cover bg-center">
+                </div>
+                <div class="text-center px-4 py-4">
+                    <h3 class="text-blue-600 text-md bold mb-6"><label id="lbl_name">No Name</label></h3>
+                    <table class="text-xs text-left mx-auto w-full text-left" id="table">
+                        <tbody>
+                            <tr>
+                                <td class="px-2 py-1 text-gray-500 font-semibold">Position</td>
+                                <td class="px-3 text-gray-500"><label id="lbl_position">No
+                                        Position</label></td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-1 text-gray-500 font-semibold">Departement</td>
+                                <td class="px-3 text-gray-500"><label id="lbl_departement">No
+                                        Departement</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-1 text-gray-500 font-semibold">Hobby</td>
+                                <td class="px-3 text-gray-500"><label id="lbl_hoby">No Hobby</label></td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-1 text-gray-500 font-semibold">Email</td>
+                                <td class="px-3 text-gray-500"><label id="lbl_email">No Email</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-1 text-gray-500 font-semibold">Phone</td>
+                                <td class="px-3 text-gray-500"><label id="lbl_phone">No Phone</label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- vue -->
+    <div id="app">
+        <!-- progress bar -->
+        <div class="px-6 pb-6 text-gray-700 text-xs">
+            <div class="grid grid-cols-1">
+                <div class="bg-white rounded-lg shadow">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
+                        <!-- indikator minggu ini -->
+                        <ul class="leading-8">
+                            <h2 class="text-lg mb-4 text-blue-700 bg-blue-100 rounded-lg p-2 text-center">Minggu
+                                Ini
+                            </h2>
+                            <!-- Kemampuan Menyampaikan Ide -->
+                            <li>
+                                <label>
+                                    Kemampuan Menyampaikan Ide
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p1percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p1percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kerja Sama Tim -->
+                            <li>
+                                <label>
+                                    Kerja Sama Tim
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p2percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p2percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Komunikasi Antar Karyawan -->
+                            <li>
+                                <label>
+                                    Komunikasi Antar Karyawan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p3percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p3percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kerapihan & Penampilan -->
+                            <li>
+                                <label>
+                                    Kerapihan & Penampilan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p4percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p4percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Mengisi Kolom Catatan Setelah Check-Out  -->
+                            <li>
+                                <label>
+                                    Mengisi Kolom Catatan Setelah Check-Out
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p5percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p5percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kualitas Pekerjaan -->
+                            <li>
+                                <label>
+                                    Kualitas Pekerjaan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p6percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p6percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Ke Kecepatan Pengumpulan Tugas -->
+                            <li>
+                                <label>
+                                    Kecepatan Pengumpulan Tugas
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p7percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p7percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Ketepatan Waktu Absen -->
+                            <li>
+                                <label>
+                                    Ketepatan Waktu Absen
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p8percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p8percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kehadiran -->
+                            <li>
+                                <label>
+                                    Kehadiran
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p9percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p9percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Tanggapan -->
+                            <li>
+                                <label>
+                                    Kecepatan Tanggapan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        type="range" min="0" max="100" v-model="group1.p10percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-blue-100"
+                                        min="0" max="100" type="number" v-model="group1.p10percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- indikator minggu lalu -->
+                        <ul class="leading-8">
+                            <h2 class="text-lg mb-4 text-red-700 bg-red-100 rounded-lg p-2 text-center">Minggu
+                                Lalu
+                            </h2>
+                            <!-- Kemampuan Menyampaikan Ide -->
+                            <li>
+                                <label>
+                                    Kemampuan Menyampaikan Ide
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p1percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p1percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kerja Sama Tim -->
+                            <li>
+                                <label>
+                                    Kerja Sama Tim
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p2percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p2percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Komunikasi Antar Karyawan -->
+                            <li>
+                                <label>
+                                    Komunikasi Antar Karyawan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p3percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p3percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kerapihan & Penampilan -->
+                            <li>
+                                <label>
+                                    Kerapihan & Penampilan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p4percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p4percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Mengisi Kolom Catatan Setelah Check-Out  -->
+                            <li>
+                                <label>
+                                    Mengisi Kolom Catatan Setelah Check-Out
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p5percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p5percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kualitas Pekerjaan -->
+                            <li>
+                                <label>
+                                    Kualitas Pekerjaan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p6percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p6percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Ke Kecepatan Pengumpulan Tugas -->
+                            <li>
+                                <label>
+                                    Kecepatan Pengumpulan Tugas
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p7percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p7percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Ketepatan Waktu Absen -->
+                            <li>
+                                <label>
+                                    Ketepatan Waktu Absen
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p8percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p8percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Kehadiran -->
+                            <li>
+                                <label>
+                                    Kehadiran
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p9percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p9percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                            <!-- Tanggapan -->
+                            <li>
+                                <label>
+                                    Kecepatan Tanggapan
+                                </label>
+                                <div class="grid items-center grid-cols-7 gap-4">
+                                    <input class="col-span-6 rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        type="range" min="0" max="100" v-model="group2.p10percent" v-on:input="addData"
+                                        @change="saveData" />
+                                    <input
+                                        class="w-14 h-5 text-center pl-4 focus:outline-none rounded-lg overflow-hidden appearance-none bg-red-100"
+                                        min="0" max="100" type="number" v-model="group2.p10percent" v-on:input="addData"
+                                        @change="saveData">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end vue -->
+    </div>
+
+    <!-- tombol -->
+    <div class="px-6 pb-6 text-gray-700">
+        <div class="flex gap-4">
+            <button id="download" onclick="createPDF();"
+                class="h-10 px-5 text-indigo-700 transition-colors duration-150 border border-indigo-500 rounded-lg focus:shadow-outline hover:bg-indigo-500 hover:text-indigo-100 bg-white shadow">Download
+            </button>
+            <button onClick="window.location.reload(); window.localStorage.clear();"
+                class="h-10 px-5 text-indigo-700 transition-colors duration-150 border border-indigo-500 rounded-lg focus:shadow-outline hover:bg-indigo-500 hover:text-indigo-100 bg-white shadow">Clear
+            </button>
+        </div>
+    </div>
+
+    <!-- print -->
+    <div id="cetak" class="text-gray-500" style="display: none; opacity: 0;">
+        <!-- chart -->
+        <div class="p-5 mb-2 grid grid-cols-1 w-3/4">
+            <canvas id="chart" height="100px" class=""></canvas>
+        </div>
+        <!-- data -->
+        <div class="p-5 flex justify-between text-center">
+            <div>
+                <p class="font-semibold">Period</p>
+                <p class=""><label id="date">No Period</label></p>
+            </div>
+            <div>
+                <p class="font-semibold">Full Name</p>
+                <p class=""><label id="name">No Name</label></p>
+            </div>
+            <div>
+                <p class="font-semibold">Position</p>
+                <p class=""><label id="position">No Position</label></p>
+            </div>
+            <div>
+                <p class="font-semibold">Departement</p>
+                <p class=""><label id="departement">No Departement</label></p>
+            </div>
+            <div>
+                <p class="font-semibold">Hobby</p>
+                <p class=""><label id="hoby">No Hobby</label></p>
+            </div>
+            <div>
+                <p class="font-semibold">Email</p>
+                <p class=""><label id="email">No Email</label>
+                </p>
+            </div>
+            <div>
+                <p class="font-semibold">Phone</p>
+                <p class=""><label id="phone">No Phone</label>
+                </p>
+            </div>
+        </div>
+        <!-- nilai -->
+        <div class="grid grid-cols-2 gap-8 p-5" id="nilai">
+            <!-- minggu ini -->
+            <ul class="text-blue-400">
+                <h2 class="text-xl text-center mb-8 font-bold">Minggu Ini
+                </h2>
+                <!-- Kemampuan Menyampaikan Ide -->
+                <li class="flex justify-between">
+                    <label>
+                        Kemampuan Menyampaikan Ide
+                    </label>
+                    <span>{{ group1.p1percent }}</span>
+                </li>
+                <!-- Kerja Sama Tim -->
+                <li class="flex justify-between">
+                    <label>
+                        Kerja Sama Tim
+                    </label>
+                    <span>{{ group1.p2percent }}</span>
+                </li>
+                <!-- Komunikasi Antar Karyawan -->
+                <li class="flex justify-between">
+                    <label>
+                        Komunikasi Antar Karyawan
+                    </label>
+                    <span>{{ group1.p3percent }}</span>
+                </li>
+                <!-- Kerapihan & Penampilan -->
+                <li class="flex justify-between">
+                    <label>
+                        Kerapihan & Penampilan
+                    </label>
+                    <span>{{ group1.p4percent }}</span>
+                </li>
+                <!-- Mengisi Kolom Catatan Setelah Check-Out  -->
+                <li class="flex justify-between">
+                    <label>
+                        Mengisi Kolom Catatan Setelah Check-Out
+                    </label>
+                    <div class="">
+                        <span>{{ group1.p5percent }}</span>
+                    </div>
+                </li>
+                <!-- Kualitas Pekerjaan -->
+                <li class="flex justify-between">
+                    <label>
+                        Kualitas Pekerjaan
+                    </label>
+                    <span>{{ group1.p6percent }}</span>
+                </li>
+                <!-- Ke Kecepatan Pengumpulan Tugas -->
+                <li class="flex justify-between">
+                    <label>
+                        Kecepatan Pengumpulan Tugas
+                    </label>
+                    <span>{{ group1.p7percent }}</span>
+                </li>
+                <!-- Ketepatan Waktu Absen -->
+                <li class="flex justify-between">
+                    <label>
+                        Ketepatan Waktu Absen
+                    </label>
+                    <span>{{ group1.p8percent }}</span>
+                </li>
+                <!-- Kehadiran -->
+                <li class="flex justify-between">
+                    <label>
+                        Kehadiran
+                    </label>
+                    <span>{{ group1.p9percent }}</span>
+                </li>
+                <!-- Tanggapan -->
+                <li class="flex justify-between">
+                    <label>
+                        Kecepatan Tanggapan
+                    </label>
+                    <span>{{ group1.p10percent }}</span>
+                </li>
+            </ul>
+
+            <!-- minggu lalu -->
+            <ul class="text-red-400">
+                <h2 class="text-xl mb-8 font-bold text-center">Minggu Lalu
+                </h2>
+                <!-- Kemampuan Menyampaikan Ide -->
+                <li class="flex justify-between">
+                    <label>
+                        Kemampuan Menyampaikan Ide
+                    </label>
+                    <span>{{ group2.p1percent }}</span>
+                </li>
+                <!-- Kerja Sama Tim -->
+                <li class="flex justify-between">
+                    <label>
+                        Kerja Sama Tim
+                    </label>
+                    <span>{{ group2.p2percent }}</span>
+                </li>
+                <!-- Komunikasi Antar Karyawan -->
+                <li class="flex justify-between">
+                    <label>
+                        Komunikasi Antar Karyawan
+                    </label>
+                    <span>{{ group2.p3percent }}</span>
+                </li>
+                <!-- Kerapihan & Penampilan -->
+                <li class="flex justify-between">
+                    <label>
+                        Kerapihan & Penampilan
+                    </label>
+                    <span>{{ group2.p4percent }}</span>
+                </li>
+                <!-- Mengisi Kolom Catatan Setelah Check-Out  -->
+                <li class="flex justify-between">
+                    <label>
+                        Mengisi Kolom Catatan Setelah Check-Out
+                    </label>
+                    <div class="">
+                        <span>{{ group2.p5percent }}</span>
+                    </div>
+                </li>
+                <!-- Kualitas Pekerjaan -->
+                <li class="flex justify-between">
+                    <label>
+                        Kualitas Pekerjaan
+                    </label>
+                    <span>{{ group2.p6percent }}</span>
+                </li>
+                <!-- Ke Kecepatan Pengumpulan Tugas -->
+                <li class="flex justify-between">
+                    <label>
+                        Kecepatan Pengumpulan Tugas
+                    </label>
+                    <span>{{ group2.p7percent }}</span>
+                </li>
+                <!-- Ketepatan Waktu Absen -->
+                <li class="flex justify-between">
+                    <label>
+                        Ketepatan Waktu Absen
+                    </label>
+                    <span>{{ group2.p8percent }}</span>
+                </li>
+                <!-- Kehadiran -->
+                <li class="flex justify-between">
+                    <label>
+                        Kehadiran
+                    </label>
+                    <span>{{ group2.p9percent }}</span>
+                </li>
+                <!-- Tanggapan -->
+                <li class="flex justify-between">
+                    <label>
+                        Kecepatan Tanggapan
+                    </label>
+                    <span>{{ group2.p10percent }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- selected -->
+    <script src="assets/select.js"></script>
+    <!-- chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="assets/chart.js"></script>
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="assets/vue.js"></script>
+    <!-- alpine -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+    <!-- date -->
+    <script async src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://unpkg.com/lightpick@latest/lightpick.js"></script>
+    <script src="assets/date.js"></script>
+    <!-- html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    <script src="assets/html2pdf.js"></script>
+
+</body>
+
+</html>
