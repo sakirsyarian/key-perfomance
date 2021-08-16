@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://panel.websiteori.com/files/system/_file608bdc2579c6c-favicon.png">
     <title>WebsiteOri - KPI</title>
-    <link rel="stylesheet" href="assets/style.css">
     <!-- tailwind -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
     <!-- date -->
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/lightpick@latest/css/lightpick.css">
 
@@ -44,7 +44,7 @@
                         <div class="col-md-5">
                             <p class="hidden" id="result-2">&nbsp;</p>
                             <input autocomplete="off" type="text" id="demo-2" placeholder="Date Range Picker"
-                                class="w-48 rounded-lg shadow px-3 py-2 bg-white text-sm font-medium text-gray-700 focus:outline-none" />
+                                class="w-52 rounded-lg shadow px-3 py-2 bg-white text-sm font-medium text-gray-700 focus:outline-none" />
                         </div>
                     </div>
                 </a>
@@ -468,33 +468,33 @@
             <canvas id="chart" height="100px" class=""></canvas>
         </div>
         <!-- data -->
-        <div class="p-5 flex justify-between text-center">
-            <div>
+        <div class="p-5 grid gap-5 grid-cols-4 grid-rows-2">
+            <div class="border-2 p-2 p-2">
                 <p class="font-semibold">Period</p>
                 <p class=""><label id="date">No Period</label></p>
             </div>
-            <div>
+            <div class="border-2 p-2">
                 <p class="font-semibold">Full Name</p>
                 <p class=""><label id="name">No Name</label></p>
             </div>
-            <div>
+            <div class="border-2 p-2">
                 <p class="font-semibold">Position</p>
                 <p class=""><label id="position">No Position</label></p>
             </div>
-            <div>
+            <div class="border-2 p-2">
                 <p class="font-semibold">Departement</p>
                 <p class=""><label id="departement">No Departement</label></p>
             </div>
-            <div>
+            <div class="border-2 p-2">
                 <p class="font-semibold">Hobby</p>
                 <p class=""><label id="hoby">No Hobby</label></p>
             </div>
-            <div>
+            <div class="border-2 p-2 col-span-2">
                 <p class="font-semibold">Email</p>
                 <p class=""><label id="email">No Email</label>
                 </p>
             </div>
-            <div>
+            <div class="border-2 p-2">
                 <p class="font-semibold">Phone</p>
                 <p class=""><label id="phone">No Phone</label>
                 </p>

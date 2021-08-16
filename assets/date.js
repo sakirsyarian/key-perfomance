@@ -16,7 +16,7 @@ var picker = new Lightpick({
 });
 
 // // local storage get item
-localStorage.getItem('tanggal') === null ? document.getElementById('demo-2').placeholder = "Date Range Picker" : document.getElementById('demo-2').placeholder = localStorage.getItem('tanggal');
+localStorage.getItem('tanggal') === null ? document.getElementById('demo-2').placeholder = "Date Range Picker" : document.getElementById('demo-2').value = localStorage.getItem('tanggal');
 
 
 
